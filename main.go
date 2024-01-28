@@ -24,12 +24,12 @@ func updateHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 				}
 			case "newinvoice":
 				{
-					invoice := tgbotapi.NewInvoice(id, "تیشرت سفید", "با کیفیت و ارزان به رنگ سفید است", "123", provider_token, "", "USD", []tgbotapi.LabeledPrice{tgbotapi.LabeledPrice{Label: "USD", Amount: 2300}})
+					invoice := tgbotapi.NewInvoice(id, "تیشرت سفید", "با کیفیت و ارزان به رنگ سفید است", "white_tshirt", provider_token, "", "USD", []tgbotapi.LabeledPrice{tgbotapi.LabeledPrice{Label: "USD", Amount: 2300}})
 					invoice.SuggestedTipAmounts = []int{}
 					invoice.NeedName = true
 					invoice.NeedEmail = true
 					invoice.NeedShippingAddress = true
-					invoice.IsFlexible = true
+					//invoice.IsFlexible = true
 					bot.Send(invoice)
 				}
 			}
@@ -37,16 +37,24 @@ func updateHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		}
 
 	}
+	// commented out because of unknown error
 
-	if update.ShippingQuery != nil {
-		if update.ShippingQuery.ShippingAddress.CountryCode == "IR" {
-			msg := tgbotapi.ShippingConfig{ShippingQueryID: update.ShippingQuery.ID, OK: false, ErrorMessage: "ارسال به ایران نداریم"}
-			bot.Send(msg)
-			return
-		}
-		msg := tgbotapi.ShippingConfig{ShippingQueryID: update.ShippingQuery.ID, OK: true, tgbotapi}
-		bot.Send(msg)
-	}
+	//if update.ShippingQuery != nil {
+	//	if update.ShippingQuery.ShippingAddress.CountryCode == "IR" {
+	//		msg := tgbotapi.ShippingConfig{ShippingQueryID: update.ShippingQuery.ID, OK: false, ErrorMessage: "ارسال به ایران نداریم"}
+	//		bot.Send(msg)
+	//		return
+	//	}
+	//	msg := tgbotapi.ShippingConfig{ShippingQueryID: update.ShippingQuery.ID, OK: true, } should send options
+	//	bot.Send(msg)
+	//}
+
+	// commented out because of library error ./main.go:53:64: update.PreChecoutQuery undefined (type tgbotapi.Update has no field or method PreChecoutQuery)
+
+	//if update.PreCheckoutQuery != nil {
+	//	msg := tgbotapi.PreCheckoutConfig{PreCheckoutQueryID: update.PreChecoutQuery.ID, OK: true}
+	//	bot.Send(msg)
+	//}
 }
 
 func main() {
